@@ -21,7 +21,6 @@ async function fetchLevels() {
         if (!userId) {
             userId = await fetchUserId();
         }
-        console.log(userId)
 
         const response = await fetch(`http://localhost:8080/api/users/levels?userId=${userId}`);
         const data = await response.json();
@@ -40,6 +39,7 @@ async function increaseLevel(type) {
             method: 'POST'
         });
         const data = await response.json();
+        console.log(data)
         if (type === 'intelligence') {
             intelligenceLevel.textContent = data.intelligence;
         } else if (type === 'strength') {
