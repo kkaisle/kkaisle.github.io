@@ -3,20 +3,30 @@ const strengthLevel = document.getElementById('strength-level');
 const increaseIntelligenceButton = document.getElementById('increase-intelligence');
 const increaseStrengthButton = document.getElementById('increase-strength');
 
+async function fetchUserId() {
+    try {
+        const response = await fetch('http://localhost:8080/api/users/generate-id');
+        const data = await response.json();
+        localStorage.setItem('userId', data.userId);
+        return data.userId;
+    } catch (error) {
+        console.error('Error generating user ID:', error);
+        return null;
+    }
+}
+
 async function fetchLevels() {
     try {
         let userId = localStorage.getItem('userId');
         if (!userId) {
-            userId = Math.random().toString(36).substring(2, 15);
-            localStorage.setItem('userId', userId);
+            userId = await fetchUserId();
         }
 
         const response = await fetch(`http://localhost:8080/api/users/levels?userId=${userId}`);
-        
         const data = await response.json();
         console.log(data);
         intelligenceLevel.textContent = data.intelligence;
-        strengthLevel.textContent = data.strength;        
+        strengthLevel.textContent = data.strength;
     } catch (error) {
         console.error('Error fetching levels:', error);
     }
