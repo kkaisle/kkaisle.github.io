@@ -5,7 +5,12 @@ const increaseStrengthButton = document.getElementById('increase-strength');
 
 async function fetchLevels() {
     try {
-        const userId = localStorage.getItem('userId');
+        let userId = localStorage.getItem('userId');
+        if (!userId) {
+            userId = Math.random().toString(36).substring(2, 15);
+            localStorage.setItem('userId', userId);
+        }
+
         const response = await fetch(`http://localhost:8080/api/users/levels?userId=${userId}`);
         
         const data = await response.json();
