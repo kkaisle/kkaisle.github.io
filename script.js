@@ -5,7 +5,7 @@ const increaseStrengthButton = document.getElementById('increase-strength');
 
 async function fetchUserId() {
     try {
-        const response = await fetch('http://10.0.0.42:8080/api/users/generate-id');
+        const response = await fetch('http://localhost:8080/api/users/generate-id');
         const data = await response.json();
         localStorage.setItem('userId', data.userId);
         return data.userId;
@@ -22,7 +22,7 @@ async function fetchLevels() {
             userId = await fetchUserId();
         }
 
-        const response = await fetch(`http://10.0.0.42:8080/api/users/levels?userId=${userId}`);
+        const response = await fetch(`http://localhost:8080/api/users/levels?userId=${userId}`);
         const data = await response.json();
         intelligenceLevel.textContent = data.intelligence;
         strengthLevel.textContent = data.strength;
@@ -34,7 +34,7 @@ async function fetchLevels() {
 async function increaseLevel(type) {
     try {
         const userId = localStorage.getItem('userId');
-        const response = await fetch(`http://10.0.0.42:8080/api/users/increase-${type}?userId=${userId}`, {
+        const response = await fetch(`http://localhost:8080/api/users/increase-${type}?userId=${userId}`, {
             method: 'POST'
         });
         const data = await response.json();
