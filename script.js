@@ -5,12 +5,11 @@ const increaseStrengthButton = document.getElementById('increase-strength');
 
 async function fetchLevels() {
     try {
-        const response = await fetch('http://localhost:8080/api/users/levels', { 
-            credentials: 'include' 
-        });
+        const userId = localStorage.getItem('userId');
+        const response = await fetch(`http://localhost:8080/api/users/levels?userId=${userId}`);
         
         const data = await response.json();
-    console.log(data)
+        console.log(data);
         intelligenceLevel.textContent = data.intelligence;
         strengthLevel.textContent = data.strength;        
     } catch (error) {
@@ -20,9 +19,9 @@ async function fetchLevels() {
 
 async function increaseLevel(type) {
     try {
-        const response = await fetch(`http://localhost:8080/api/users/increase-${type}`, {
-            method: 'POST',
-            credentials: 'include'
+        const userId = localStorage.getItem('userId');
+        const response = await fetch(`http://localhost:8080/api/users/increase-${type}?userId=${userId}`, {
+            method: 'POST'
         });
         const data = await response.json();
         if (type === 'intelligence') {
