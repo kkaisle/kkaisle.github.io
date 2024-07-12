@@ -21,6 +21,7 @@ async function fetchLevels() {
         if (!userId) {
             userId = await fetchUserId();
         }
+        console.log(userId)
 
         const response = await fetch(`http://localhost:8080/api/users/levels?userId=${userId}`);
         const data = await response.json();
